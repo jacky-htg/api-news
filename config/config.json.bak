@@ -1,0 +1,26 @@
+{
+    "server": {
+        "address": ":8080"
+    },
+    "database": {
+		"mysql": {
+        		"driverName": "mysql",
+        		"dataSourceName": "root:rebel@/api_news?parseTime=true"
+		},
+		"redis": {
+			"address": "127.0.0.1:6379"
+		}
+    },
+	"auth": {
+		"apiKey": "n3WsAp1D3v"
+	},
+	"aws": {
+		"s3": {
+			"key": "",
+			"secret": "",
+			"region": "",
+			"bucket": "",
+			"url": ""
+		}
+	}
+}
