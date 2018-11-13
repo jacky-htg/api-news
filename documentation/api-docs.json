@@ -10,7 +10,7 @@
     },
     "host": "localhost:8080",
     "schemes": [
-        "https"
+        "http"
     ],
     "paths": {
         "/get-token": {
