@@ -69,4 +69,6 @@ File Configuration on ./config/config.json
 
 You can run application with going the directory api-news and command : go run main.go
 
+You can test the api using command : go test -v
+
 For api documentation, you can open on the browser: http://localhost:8080/documentation/
