@@ -643,7 +643,7 @@
           	},
           	"put": {
             		"tags": [
-            	  		"Topic"
+            	  		"Topics"
             		],
             		"summary": "Update topic",
             		"description": "Update topic with all required body",
@@ -709,7 +709,7 @@
           	},
           	"delete": {
             		"tags": [
-              		"Topic"
+              		"Topics"
             		],
             		"summary": "Deleting topic",
             		"description": "Deleting topic, with id supply",
