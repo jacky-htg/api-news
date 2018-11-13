@@ -32,6 +32,8 @@ Editor :
 * PUT /topics/{id}
 * DELETE /topics/{id}
 
+for demo documentation, see https://api-news.rijalasepnugroho.com/documentation/
+
 ### What is this repository for? ###
 
 * API for News
