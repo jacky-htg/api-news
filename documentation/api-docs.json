@@ -4,7 +4,7 @@
         "title": "Shonet API",
         "contact": {
             "name": "The Shonet",
-            "url": "https://www.theshonet.com/home"
+            "url": "https://www.rijalasepnugroho.com"
         },
         "version": "1.0"
     },
@@ -40,7 +40,7 @@
 								"email": {
 									"type": "string",
 									"format": "email",
-									"example": "jacky@rebelworks.co"
+									"example": "rijal.asep.nugroho@gmail.com"
 								},
 								"password": {
 									"type": "string",
@@ -70,262 +70,14 @@
                 }
             }
         },
-		"/sign-up": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Sign Up as Superwriter",
-                "description": "Sign Up as Superwriter",
-                "operationId": "auth.sign-up",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "sign-up object that need sign up a superwriter",
-                        "required": true,
-                        "schema": {
-							"type": "object",
-							"required":[
-								"fullname",
-								"email",
-								"password",
-								"repassword"
-							],
-							"properties": {
-								"fullname": {
-									"type": "string",
-									"example": "Jacky Rebelworks"
-								},
-								"email": {
-									"type": "string",
-									"format": "email",
-									"example": "jacky@rebelworks.co"
-								},
-								"password": {
-									"type": "string",
-									"format": "password",
-									"example": "rahasia"
-								},
-								"repassword": {
-									"type": "string",
-									"format": "password",
-									"example": "rahasia"
-								}
-							}
-						}
-                    }
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Bad Request, required form data"
-                    },
-                    "401": {
-                      "description": "Not Authorized, api key not valid"
-                    },
-                    "500": {
-                        "description": "Internal Server error"
-                    },
-                    "201": {
-                        "description": "Success register superwriter"
-                    }
-                }
-            }
-        },
-		"/change-password": {
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Change Password",
-                "description": "Change Password",
-                "operationId": "user.change-password",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-					{
-		                "name": "token",
-		                "in": "header",
-		                "description": "authority token",
-		                "required": true,
-		                "type": "string"
-		            },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "object that need for change password",
-                        "required": true,
-                        "schema": {
-							"type": "object",
-							"required":[
-								"OldPassword",
-								"NewPassword",
-								"RePassword"
-							],
-							"properties": {
-								"OldPassword": {
-									"type": "string",
-									"format": "password",
-									"example": "rahasia"
-								},
-								"NewPassword": {
-									"type": "string",
-									"format": "password",
-									"example": "rahasia"
-								},
-								"RePassword": {
-									"type": "string",
-									"format": "password",
-									"example": "rahasia"
-								}
-							}
-						}
-                    }
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Bad Request, required form data"
-                    },
-                    "401": {
-                      "description": "Not Authorized, api key not valid"
-                    },
-                    "500": {
-                        "description": "Internal Server error"
-                    },
-                    "200": {
-                        "description": "Success change password"
-                    }
-                }
-            }
-        },
-		"/profile": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "View detail profile",
-                "description": "View detail profile",
-                "operationId": "user.profile",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-					{
-		                "name": "token",
-		                "in": "header",
-		                "description": "authority token",
-		                "required": true,
-		                "type": "string"
-		            }
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Bad Request, required form data"
-                    },
-                    "401": {
-                      "description": "Not Authorized, api key not valid"
-                    },
-                    "500": {
-                        "description": "Internal Server error"
-                    },
-                    "200": {
-                        "description": "Success get profile"
-                    }
-                }
-            },
-			"put": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Update profile",
-                "description": "Update profile",
-                "operationId": "user.profile-update",
-                "produces": [
-                    "application/json"
-                ],
-                "parameters": [
-					{
-		                "name": "token",
-		                "in": "header",
-		                "description": "authority token",
-		                "required": true,
-		                "type": "string"
-		            },
-                    {
-                        "name": "body",
-                        "in": "body",
-                        "description": "user object that need for update profile",
-                        "required": true,
-                        "schema": {
-							"type": "object",
-							"properties": {
-								"Name": {
-									"type": "string",
-									"example": "Jacky Rebelworks"
-								},
-								"PhoneNumber": {
-									"type": "string",
-									"example": "0777777777777"
-								},
-								"Photo": {
-									"type": "string",
-									"format": "byte",
-									"example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAABWVBMVEX////qQzU0qFNChfT7vAVtbW1wcHBqamq5zfo0f/RycnLIyMhoaGg+g/RjlvV0dHR+fn7w8PCxyPqZmZnn5+eFhYW3t7eSkpLv7+/29vb7twDe3t7Q0NC+vr6wsLBjY2MQoT7pOCelpaX4zcsopUvpMR7pLBbpNSPzpqG63MH/+fDX19foHwD+9vYAnznU6dnW4vz94q77vyHt9u/62dfsXlT8wgBFrV8Zp1Z2vocpevOIxpa02rzF1vsnefP2vrvpNjf85+bymZT1sa38zmnwiYM3onz3oxdBiObh8OSczqaRtPjwdSj7xEJftnM6mp40mKg5npHudW7+7MZqu30/jdb80Xj5rg7tXDDsVUnvfnbtaWDxeAD81ojrSj51ofbBtSx6rUVgq0v8ylf+893q8P3RtyWRsD7juRumsjf94qI8lrXziiI+kMo1pWfrUTKlqwppqcHxeyclDY+6AAALmElEQVR4nO2a6V/bRhqAhfFIYSwiEUuWhWT5QLYhBpyEEodADiDuNrRNt2m2bWDTdnum2233+P8/7Mzo8KWxJFtYMp3nQ35Y9ozm8bzvO6NxOI7BYDAYDAaDwWAwGAwGg8FgMBgMBoNxw9hDbG07PMMv0h5Qkpyenvf79Var1aw7tNHfrct+//Q07aElwdbZ1UqrXa+vjINMm62r11vLbfnsaqU56Tbiid4/X9aI3ervtqfaebRbh0soubf9NmT2RiXrZx+kPeRY7J2txNBzwrV9tUSOZ624fsSxebUcVWdveyY/4tjaXoJ83PomWnkJpr3yLG2BEPb6rTn8MK3LTE/js9gFZpJ6lqdx7gl0yGw27h3Ok4HDtA/Tdglkq5mQH6L+NoNr49ZucoKI3a20hcbZTnAGHcWMrf6XSaWgL5ixObyqJyzYypjg66QFmxkTPL/pIZrkMpFNwWSXieyF6F68nVo94ExqlKwVmb3DqGptfIb4tn/WP2y2Ws02TTRrIcqdRaoy9fbK5fnw0D84367Xg5pmbQa5ZxFitN46DDxmOt06nJjJrOUgt/dNuN9unz7q07PdEcfMzSDXH5+DCXb705/19vpDjpnLQW4rLEabh+H7571Lr5fMhSjHvQ0J0Hq084gtZwXJoOD29Drafh31AegUb2yzF6Jha32zH6Ov1+3sFRm0FNanCsYb8WUGBbm/JyiYSd49/IoumMGkis3dfP7h5ifPgwWzmFSx+edmHjl+EihYvwmC3Kd5zMO/BMxiO04VzSxfbOYdxa++Hnesv057cInwZd7j4dfjhhk76ZyRzfxAcTRSm+dpjy0R7g8ZIsV/DxlepT22ZHiRH+ZhfpCMzQz+pjIL+TEe/uv5jSozfiUdjlR3rb8ZZcZZ7scUN1ee35wsdJf7ccf/PV9p3ZAsvPsgyBAl48rbtIeWED9OBqmbjNtpDy0hJguNy+aPoW3v3ZqROwsQ83lBEcx/Gt72ztO12Xh6/V4DvqQZvghve2dtdTbWnly/mM8PtCD9Irzt7IYLDNO71DS88YYPIjSe3fDjaxfzScdwdfXaxXyohvkIjWc2XF+/djEf2oKffxeh8VIYBuy7nUJzP0JjZsgMF8LNN7x/4w1vfi1NZ8VnhknyJza81meLRRqm83y4fvv6xXyoz/g/hLddiufD+c5plsKQuiBGOGu7s7Y+nWwbvj8ObXvrdhg0w3sLMPMJPvPO/5rrzd/3t5RZfDx/1zEI/N0i/8ujXK07d9+PKXO40PPSwKeLB7lHuVzuzbxd36NUovUFHkRxgcf63+UItZdzdk2rtQs2nPgNOP/rI8fQnncSb1PScLGFZnJF/N4VnHsSaUG6+vSnhIYekdGH4J9zQ8xXTmmVdP3bhEYemWHD7x4NG9onc3R7j1ZJF52GI1vTf4wIIsWD2bulTeHq4wWn4dC25v33Y4LzxCl1Chd5pO/hLvo/T/ihSTyatVNaIU0hDb1a80uAIKqnM6bix9TnjoX+POpyF29jxlPQn8WZNm9P6A9Wi92yubzbfJ+jCOZy+zMoPnlKFVzok5PP3f9Q/XCgxlb8aY36aLjw5d7l2J5iGHtZvLdKF0yjzmAOphrmarEq6hP6OpHGYuhyMl3RfhV9i3qHnoMLPmUbpTfVMGfnLqL18/K/0wRTWSpcutMnEU9jlIJzbO9/NkUxxSkMKzbRHHfQXOfsPz6iLoYpFVKXMEFE7VVXp7Y/OK45X5Ld+532cJ9SIXXp7kdx7B0FTmT34lVtEAT7v1HKaapTyHEXoXFKZqjW6+3sDD1VdXdOer2aPdLY/jDoODid7cwwvUiKWMCuDWEHNLP/+NtEpKZaZjzFiIZR2P99PFIXew4cTKRUjIr9+eju9PGttPUwO7UkFT/8aEhxkf8fcRrJKtYGybiWgSR0OElSMWd/tpadKuORrGLtc/IktZ7uZmaMRAMVbePwHi61Z6ZgklXM5X57vOgfKkLZSXLRQCvjX7MmiNbFXNTdTQTsV3McnF8fkTdwEQTTdqFwkVAy1iKeDaRAIpFq93bS9pjCwdHcirU39AfmTNCdLxvtXJYn0OUk6Nkvop99kckaOs7B8f5Mjnbtzbz/k2NhHBzHn0fbXh4/zMFOrxZD0q7lliM+R3h5FHgaEzR7+0fd5fMjnIRL2nbt6CTj68N0ujvk2HBSFF+r9XoXS7A6hNPtHh0d2c4hou2eKuaOjo678/9PxixxgHjZPTk52XmJ/1zSvGMwGAwGg8FgMBgMBoPBYDAYAXQsAMSGGa+RUSrpHGeWKv7rCqHUidY65u3mQhN4yPO8oClxWhXEahm3lf3XvAMQSqGNdQFUC7OMdSY0XhKLjQaAkI/zq0IBCBscV+R9QyABEQMkoRHWuCNIwJptuPEpCJK0gf8oAl6L027CEBQ4Xde5jgyF0NEXRXlhP9IUIXTvpUnFGO0CDL3UgpKY4ADnRZclyf2zHOtbDZxDhxIPFpdk4WhQCrrcMdw/FHNj+LLpfQ1TDBWBZmiMdOaimwr9M7o5XJvNSIV6jAbPj2RNAYgb6CIApBQUIA94ye3XUCEAPCy4n6MaNngBldkKEN1vwxQE7FAuol55iSwvJfKmBlSuLOOrXvndIJ/xR2RCfMeG00+H3D5exceUUVlTjcFrNNKOgEClUUWLARAEKFVJhplViUfXIZD0YEM3Dw2RhMWQIcCGClqSUL8Qdesb8lqhiu7AS4JTAjqS+xnSqy4LEI+EJ/dXnRewGr4YjdGpQklQG95Xg6q+KliKUpEkWARyQVGKgKSqUUXjUBRT5flioCFfMjAWmiedGAojhlACJUVRNB4vJiUev6lBWcZ3sERJwBIbQBLRrQ1U1lXSA1QNPBJY1XHNl9ELE5Uxg4uJXqwCFIyy4RmKJCrRmsU7JV2DAnrP0NxFWoWiErge4q8fTQh0omrM0BTcUFSLxsBQIl8GelPCSpIkOnFQAgAFM4oupz0s4btKZfzCEK2AXA51LMg8WvctZ6TQXRZVyc0sQwAkedyedRFfDzIEBB40AgwrgPc2eNzA0Mtd9Bf29D+iQmRcdQ3dK9IMZkMoDUEiC3UBgIp3V7dP3TXkjAaioKigNCVKDUsgF8ejlMdROm7Iu1dQvcP/gI5CKFs4Tho8itKy2wKFrOy/mA1DJhHujJwYkmQYGJZVgcQhlHGtm7Lil0gdHjesiJAXVa2gDBl6d3AMVUkCggOqPQq3IQEoQK3hlHJcaYBWnGW98DCBG33lQMMySlYBPTwUUX4GG/qLoArlSUNOKQo4hEkM0wx5n6ridAr8ZwJTIi/kuIVG97NDF3DNpBrK0I1VnTaHviG5OjDsOIZ4kJaKZqdEMwzYGBumJvFQcF4oZlEGcfOxIFW9Xcp0QwVI3ksQZqjhOjEwLEJhsEwbkiRTDJ2dwgS6xYPB02QFxHwqMQWvdHIGqXY0Q8P/YCXMsAMkMofAjScZJ5VeKfq+RrAhqqXe4C2cbh3N6aCMa6zhZaDIx3zuQlsh53FOkaSqQjcso++ezIkhhuQh+gBe1vyvpAGwYUN0lllcovVgQ06CgvOZiiBqnFIFztuoQJg6AM7tFSGuISogQLYKFl4tGtyUPNR4KBc2OppIq6US2gVBtD8CzrKDEhdtyjZMVVDJHKLLRaOsOI+hwYZl1FrrbBhoLAC93RB4tVDeKKFtDNrToPtWNsoFPv6eBi0CeHsNoUjm0jmdIIbeCYVeFXGNUdFWFW0SRSRpTTnF4AF0KlIZlQjUQGyYIg4OBQDo7zlLAk7/QeuGQIqJAgFuAnmZJF5DhHjXCslmqlCFZFsshp4gTGLKoiBWi85XY1iWWyAKlldmLZIWXKMqClW0S69Ypve5guXtgw2r5OIX57JWFUU0OsVyNlol1F506kTHbe191rSc0NMr+DPVhrfOqLiHolOnTNKdFntXymAwGAwGg8FgMBgMBoPBYDAYDAaDwUia/wNmGmgxmfJEUwAAAABJRU5ErkJggg=="
-								},
-								"Birthdate":{
-									"type": "string",
-									"format": "date-time"
-								},
-								"Biography": {
-									"type": "string",
-									"example": "Aku adalah anak gembala, selalu riang serta gembira."
-								},
-								"Gender": {
-									"type": "string",
-									"enum":["F", "M"],
-									"example": "M"
-								},
-								"City": {
-									"type": "object",
-									"properties": {
-										"ID": {
-											"type": "integer",
-											"example": 1007129
-										}
-									}
-								}
-							}
-						}
-                    }
-                ],
-                "responses": {
-                    "400": {
-                        "description": "Bad Request, required form data"
-                    },
-                    "401": {
-                      "description": "Not Authorized, api key not valid"
-                    },
-                    "500": {
-                        "description": "Internal Server error"
-                    },
-                    "200": {
-                        "description": "Success change password"
-                    }
-                }
-            }
-        },
-        "/articles": {
+		"/news": {
           	"get": {
             		"tags": [
-              		"Articles"
+              		"News"
             		],
-            		"summary": "Get all Journal and Product article on Draft or Published",
-            		"description": "Get all Journal and Product article on Draft or Published with all filtering parameter for optimizing search",
-            		"operationId": "articles.index",
+            		"summary": "Get all news on Draft or Published",
+            		"description": "Get all news on Draft or Published with all filtering parameter for optimizing search",
+            		"operationId": "news.index",
             		"produces": [
               		"application/json"
             		],
@@ -341,22 +93,15 @@
                 			"name": "search",
                 			"in": "query",
                 			"type": "string",
-                			"description": "Searching article with keywords"
+                			"description": "Searching news with keywords"
               		},
               		{
                 			"name": "status",
                 			"in": "query",
                 			"required": false,
                 			"type": "string",
-			    			"enum":["D", "S", "P"],
-                			"description": "This to define the article's status Draft, Save or Published (D, S or P)"
-              		},
-              		{
-                			"name": "type",
-                			"in": "query",
-                			"type": "string",
-			    			"enum":["J", "P"],
-                			"description": "Type to define what is article type Product(P) or Journal(J)"
+			    			"enum":["D", "P"],
+                			"description": "This to define the news status : Draft or Published (D or P)"
               		},
               		{
                 			"name": "page",
@@ -372,20 +117,20 @@
                 			"required": false,
                 			"type": "integer",
                 			"minimum": 1,
-                			"description": "Limit the articles display on mobile to get pagination"
+                			"description": "Limit the news display on pagination. default is 50"
               		},
 			 		{
                 			"name": "sortby",
                 			"in": "query",
                 			"type": "string",
-                			"description": "Sorting your article with some condition publish_date, created_at, or name"
+                			"description": "Sorting your news with some condition (field_name on database, ex: publish_date)"
               		},
               		{
                 			"name": "order",
                 			"in": "query",
                 			"type": "string",
 						"enum": ["asc", "desc"],
-                			"description": "Ordering articles index with ascending order or descending order"
+                			"description": "Ordering news index with ascending order or descending order"
               		}              
             		],
             		"responses": {
@@ -405,17 +150,17 @@
                 			"description": "Internal Server error"
               		},
               		"200": {
-            				"description": "Success get articles"
+            				"description": "Success get news"
               		}
             		}
           	},
           	"post": {
 	            "tags": [
-	              	"Articles"
+	              	"News"
 	            ],
-	            "summary": "Storing Journal or Product article on Draft or Published",
-	            "description": "Storing Journal or Product article on Draft or Published with all required body",
-	            "operationId": "articles.index",
+	            "summary": "Storing draft of news",
+	            "description": "Storing Draft of news with all required body",
+	            "operationId": "news.index",
 	            "produces": [
 	              	"application/json"
 	            ],
@@ -430,27 +175,20 @@
 	              	{
 	                		"name": "body",
 	                		"in": "body",
-	                		"description": "object that need for creating new article",
+	                		"description": "object that need for creating new news",
 	                		"required": true,
 	                		"schema": {
 	                  	"type": "object",
 	                  		"required":[
 	                    			"title",
 	                    			"content",
-	                    			"image",
-	                    			"seo_keyword",
-	                    			"type",
-	                    			"status",
-	                    			"request_publish_date",
-	                    			"category",
-	                    			"tags",
-	                    			"products"
+	                    			"topic"
 	                  		],
 	                  		"properties": {
 	                    			"title": {
 	                      			"type": "string",
 	                      			"format": "text",
-	                      			"example": "Journal article create new"
+	                      			"example": "Balada Seorang Anak Gembala"
 	                    			},
 	                    			"content": {
 	                      			"type": "string",
@@ -462,26 +200,12 @@
 	                      			"format": "byte",
 	                      			"example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAgESAAMAAAABAAEAAIdpAAQAAAABAAAAJgAAAAAAAqACAAQAAAABAAACVKADAAQAAAABAAACSgAAAAD/4QkhaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA1LjQuMCI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI/mab6en6v+v+GNy3d2loJiotbcKqRhQII8KNoOABHgDJJwO/NID//Z"
 	                    			},
-	                    			"seo_keyword": {
+	                    			"image_caption": {
 	                      			"type": "string",
 	                      			"format": "text",
-	                      			"example": "text seo keyword"
+	                      			"example": "TIME. Kisah Anak Gembala di Padang Rumput"
 	                    			},
-	                    			"type": {
-	                      			"type": "string",
-	                      			"enum": ["P", "J"],
-	                      			"example": "P"
-	                    			},
-	                    			"status": {
-	                      			"type": "string",
-	                      			"enum": ["D", "S", "P"],
-	                      			"example": "D"
-	                    			},
-	                    			"request_publish_date": {
-	                      			"type": "string",
-	                      			"format": "date-time"
-	                    			},
-	                    			"category": {
+	                    			"topic": {
 	                      			"type": "array",
 	                      			"items": [
 	                        				{
@@ -490,7 +214,7 @@
 	                            					"id": {
 	                              					"type": "integer",
 	                              					"format": "int64",
-	                              					"example": 6
+	                              					"example": 1
 	                            					}
 	                          				}
 	                        				},
@@ -500,67 +224,7 @@
 	                            					"id": {
 	                              					"type": "integer",
 	                              					"format": "int64",
-	                              					"example": 35
-	                            					}
-	                          				}
-	                        				}
-	                      			]
-	                    			},
-	                    			"tags": {
-	                      			"type": "array",
-	                      			"items":[
-	                        				{
-	                          				"type": "object",
-	                          				"properties": {
-	                            					"title": {
-	                              					"type": "string",
-	                              					"format": "text",
-	                              					"example": "sama"
-	                            					}
-	                          				}
-	                        				},
-	                        				{
-	                          				"type": "object",
-	                          				"properties": {
-	                            					"title": {
-	                              					"type": "string",
-	                              					"format": "text",
-	                              					"example": "shonet"
-	                            					}
-	                          				}
-	                        				}
-	                      			]
-	                    			},
-	                    			"products": {
-	                      			"type": "array",
-	                      			"items": [
-	                        				{
-	                          				"type": "object",
-	                          				"properties": {
-	                          	  				"id": {
-	                              					"type": "integer",
-	                              					"format": "uint",
-	                              					"example": 1531
-	                            					}
-	                          				}
-	                        				},
-	                        				{
-	                          				"type": "object",
-	                          				"properties": {
-	                            					"id": {
-	                              					"type": "integer",
-	                              					"format": "uint",
-	                              					"example": 1533
-	                            					}
-	                          				}
-	                        				},
-	                        				{
-	                          				"type": "object",
-	                          				"properties": {
-	                            					"id": {
-	                              					"type": "integer",
-	                              					"format": "uint",
-	                              					"example": 1536
+	                              					"example": 2
 	                            					}
 	                          				}
 	                        				}
@@ -589,14 +253,14 @@
 	            }
 	        }
         },
-        "/articles/{id}": {
+        "/news/{id}": {
           	"get": {
             		"tags": [
-              		"Articles"
+              		"News"
             		],
-            		"summary": "Get Journal and Product article",
-	            	"description": "Get specific Journal or Product article for editing article",
-	            	"operationId": "articles.view",
+            		"summary": "Get News By ID",
+	            	"description": "Get specific news for view, editing or delete ",
+	            	"operationId": "news.view",
 	            	"produces": [
 	              	"application/json"
 	            	],
@@ -614,7 +278,7 @@
                 			"required": true,
                 			"type": "integer",
                 			"minimum": 1,
-                			"description": "search article by id parameter"
+                			"description": "search news by id parameter"
               		}
             		],
             		"responses": {
@@ -640,11 +304,11 @@
           	},
           	"put": {
             		"tags": [
-            	  		"Articles"
+            	  		"News"
             		],
-            		"summary": "Update Journal or Product article",
-            		"description": "Update Journal or Product article with all required body",
-            		"operationId": "articles.update",
+            		"summary": "Update news",
+            		"description": "Update news with all required body",
+            		"operationId": "news.update",
             		"produces": [
               		"application/json"
             		],
@@ -660,13 +324,13 @@
                 			"name": "id",
                 			"in": "path",
                 			"required": true,
-                			"description": "add id to specific update article",
+                			"description": "add id to specific update news",
                 			"type": "integer"
               		},
               		{
                 			"name": "body",
                 			"in": "body",
-                			"description": "object that need for update article",
+                			"description": "object that need for update news",
                 			"required": true,
                 			"schema": {
                   			"type": "object",
@@ -674,19 +338,14 @@
                     				"title",
                     				"content",
                     				"image",
-                    				"seo_keyword",
-                    				"type",
-                    				"status",
-                    				"request_publish_date",
-                    				"category",
-                    				"tags",
-                    				"products"
+                    				"publish_date",
+                    				"topic"
                   			],
                   			"properties": {
                     				"title": {
                       				"type": "string",
                       				"format": "text",
-                      				"example": "Journal article edit new"
+                      				"example": "Balada Kisah Anak Gembala di Padang Rumput"
                     				},
                     				"content": {
                       				"type": "string",
@@ -698,21 +357,11 @@
                       				"format": "byte",
                       				"example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAgESAAMAAAABAAEAAIdpAAQAAAABAAAAJgAAAAAAAqACAAQAAAABAAACVKADAAQAAAABAAACSgAAAAD/4QkhaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA1LjQuMCI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI/mab6en6v+v+GNy3d2loJiotbcKqRhQII8KNoOABHgDJJwO/NID//Z"
                     				},
-                    				"type": {
-                      				"type": "string",
-                      				"enum": ["P", "J"],
-                      				"example": "P"
-                    				},
-                    				"status": {
-                      				"type": "string",
-                      				"enum": ["D", "S", "P"],
-                      				"example": "D"
-                    				},
-                    				"request_publish_date": {
+                    				"publish_date": {
                       				"type": "string",
                       				"format": "date-time"
                     				},
-                    				"category": {
+                    				"topic": {
                       				"type": "array",
                       				"items": [
                         					{
@@ -721,7 +370,7 @@
                             						"id": {
                               						"type": "integer",
                               						"format": "int64",
-                              						"example": 6
+                              						"example": 1
                             						}
                           					}
                         					},
@@ -731,67 +380,7 @@
                             						"id": {
                               						"type": "integer",
                               						"format": "int64",
-                              						"example": 35
-                            						}
-                          					}
-                        					}
-                      				]
-                    				},
-                    				"tags": {
-                      				"type": "array",
-                      				"items": [
-                        					{
-                          					"type": "object",
-                          					"properties": {
-                            						"id": {
-                            	  						"type": "string",
-                              						"format": "text",
-                              						"example": "shonet"
-                            						}
-                          					}
-                        					},
-                        					{
-                          					"type": "object",
-                          					"properties": {
-                            						"id": {
-                              						"type": "string",
-                              						"format": "text",
-                              						"example": "cakep"
-                            						}
-                          					}
-                        					}
-                      				]
-                    				},
-                    				"products": {
-                      				"type": "array",
-                      				"items": [
-                        					{
-                          					"type": "object",
-                          					"properties": {
-                            						"id": {
-                              						"type": "integer",
-                              						"format": "uint",
-                              						"example": 1531
-                            						}
-                          					}
-                        					},
-                        					{
-                          					"type": "object",
-                          					"properties": {
-                            						"id": {
-                              						"type": "integer",
-                              						"format": "uint",
-                              						"example": 1533
-                            						}
-                          					}
-                        					},
-                        					{
-                          					"type": "object",
-                          					"properties": {
-                            						"id": {
-                              						"type": "integer",
-                              						"format": "uint",
-                              						"example": 1536
+                              						"example": 2
                             						}
                           					}
                         					}
@@ -812,23 +401,23 @@
                 			"description": "Forbidden Access, You not have priviledges to access this API"
               		},
               		"404": {
-                			"description": "Articles Not Found"
+                			"description": "News Not Found"
               		},
               		"500": {
                 			"description": "Internal Server error"
               		},
               		"200": {
-                			"description": "Success to update articles"
+                			"description": "Success to update news"
               		}
             		}
           	},
           	"delete": {
             		"tags": [
-              		"Articles"
+              		"News"
             		],
-            		"summary": "Deleting Journal and attach all article relations",
-            		"description": "Deleting Journal and attach all article relations, with id supply",
-            		"operationId": "articles.destroy",
+            		"summary": "Deleting news",
+            		"description": "Deleting news, with id supply",
+            		"operationId": "news.destroy",
             		"produces": [
               		"application/json"
             		],
@@ -844,7 +433,7 @@
                 			"name": "id",
                 			"in": "path",
                 			"required": true,
-                			"description": "add id to specific article delete",
+                			"description": "add id to specific news delete",
                 			"type": "integer"
               		}
             		],
@@ -859,25 +448,25 @@
                 			"description": "Forbidden Access, You not have priviledges to access this API"
               		},
               		"404": {
-                			"description": "Articles Not Found"
+                			"description": "News Not Found"
               		},
               		"500": {
                 			"description": "Internal Server error"
               		},
               		"204": {
-                			"description": "Success to delete articles"
+                			"description": "Success to delete news"
               		}
             		}
           	}
         },
-        "/categories": {
+        "/topics": {
           	"get": {
             		"tags": [
-              		"Categories"
+              		"Topics"
             		],
-            		"summary": "Get categories for product select",
-            		"description": "Get all categories by type and get all child",
-            		"operationId": "categories.index",
+            		"summary": "Get topics for news",
+            		"description": "Get all topics",
+            		"operationId": "topics.index",
             		"produces": [
               		"application/json"
             		],
@@ -890,19 +479,40 @@
                 			"type": "string"
 					},
 					{
-							"name": "article",
-							"in": "query",
-							"description": "for get article category while create (type J or P)",
-							"required": false,
-							"type": "string"	  
-					},
-					{
-							"name": "product",
-							"in": "query",
-							"description": "for get categories from products (fashion or beauty)",
-							"required": false,
-							"type": "string"	  
-					}
+                			"name": "search",
+                			"in": "query",
+                			"type": "string",
+                			"description": "Searching topic with keywords"
+              		},
+              		{
+                			"name": "page",
+                			"in": "query",
+                			"required": false,
+                			"type": "integer",
+						"minimum": 1,
+                			"description": "page of pagination. default page is 1"
+              		},
+              		{
+                			"name": "limit",
+                			"in": "query",
+                			"required": false,
+                			"type": "integer",
+                			"minimum": 1,
+                			"description": "Limit the topic display on pagination. default is 50"
+              		},
+			 		{
+                			"name": "sortby",
+                			"in": "query",
+                			"type": "string",
+                			"description": "Sorting topic with some condition (field_name on database, ex: title)"
+              		},
+              		{
+                			"name": "order",
+                			"in": "query",
+                			"type": "string",
+						"enum": ["asc", "desc"],
+                			"description": "Ordering topic index with ascending order or descending order"
+              		}
             		],
             		"responses": {
               		"400": {
@@ -924,94 +534,90 @@
                 			"description": "Success get categories"
               		}
             		}
-          	}
-        },
-        "/products": {
+          	},
+          	"post": {
+	            "tags": [
+	              	"Topics"
+	            ],
+	            "summary": "Storing topic",
+	            "description": "Storing topic with all required body",
+	            "operationId": "topics.index",
+	            "produces": [
+	              	"application/json"
+	            ],
+	            "parameters": [
+	              	{
+						"name": "token",
+		                	"in": "header",
+		                	"description": "authority token",
+		                	"required": true,
+		                	"type": "string"
+	              	},
+	              	{
+	                		"name": "body",
+	                		"in": "body",
+	                		"description": "object that need for creating new topic",
+	                		"required": true,
+	                		"schema": {
+	                  	"type": "object",
+	                  		"required":[
+	                    			"title"
+	                  		],
+	                  		"properties": {
+	                    			"title": {
+	                      			"type": "string",
+	                      			"format": "text",
+	                      			"example": "Politik"
+	                    			}
+	                  		}
+	                		}
+	              	}
+	            ],
+	            "responses": {
+	              	"400": {
+	              		"description": "Bad Request, required form data"
+	              	},
+	              	"401": {
+	                		"description": "Not Authorized, api key not valid"
+	              	},
+	              	"403": {
+	                		"description": "Forbidden Access, You not have priviledges to access this API"
+	              	},
+	              	"500": {
+	                		"description": "Internal Server error"
+	              	},
+	              	"201": {
+	                		"description": "Success to create topics"
+	              	}
+	            }
+	        }
+		},
+		"/topics/{id}": {
           	"get": {
             		"tags": [
-              		"Products"
+              		"Topics"
             		],
-            		"summary": "To get all products while inserting product article",
-            		"description": "Plaese insert some required or optional parameters for get some articles",
-            		"operationId": "products.index",
-            		"produces": [
-              		"application/json"
-            		],
-            		"parameters": [
+            		"summary": "Get topic By ID",
+	            	"description": "Get specific topic for view, editing or delete ",
+	            	"operationId": "topics.view",
+	            	"produces": [
+	              	"application/json"
+	            	],
+	            	"parameters": [
               		{
                 			"name": "token",
                 			"in": "header",
-                			"required": true,
                 			"description": "authority token",
+                			"required": true,
                 			"type": "string"
-					},
-              		{
-                			"name": "search",
-                			"required": false,
-                			"in": "query",
-                			"type": "string",
-                			"description": "Search product by keyword while inserting products on product article"
               		},
               		{
-                			"name": "category_id",
-                			"required": false,
-                			"in": "query",
-                			"type": "integer",
-                			"description": "To get specific products display, please supply product category id"
-              		},
-              		{
-                			"name": "brands_id",
-                			"required": false,
-                			"in": "query",
-                			"type": "integer",
-                			"description": "Get products with brand"
-              		},
-              		{
-                			"name": "price_min",
-                			"required": false,
-                			"in": "query",
-                			"type": "integer",
-                			"format": "int64",
-                			"description": "filtered by minimum price"
-              		},
-              		{
-                			"name": "price_max",
-                			"required": false,
-                			"in": "query",
-                			"type": "integer",
-                			"format": "int64",
-                			"description": "filtered by maximum price list"
-              		},
-			 		{
-                			"name": "page",
-                			"required": false,
-                			"in": "query",
+                			"in": "path",
+                			"name": "id",
+                			"required": true,
                 			"type": "integer",
                 			"minimum": 1,
-                			"description": "To get pagination or scroll infinite on mobile please supply number of page"
-              		},
-              		{
-                			"name": "limit",
-                			"required": false,
-                			"in": "query",
-                			"type": "integer",
-                			"minimum": 1,
-                			"description": "To get specific products display, please supply limit product category id"
-              		},
-              		{
-                			"name": "sortby",
-                			"required": false,
-                			"in": "query",
-                			"type": "string",
-                			"description": "Sort products by field"
-              		},
-			 		{
-                			"name": "order",
-                			"required": false,
-                			"in": "query",
-                			"type": "string",
-                			"enum": ["asc", "desc"],
-                			"description": "Ordering products index with ascending order or descending order"
+                			"description": "search topic by id parameter"
               		}
             		],
             		"responses": {
@@ -1025,25 +631,23 @@
                 			"description": "Forbidden Access, You not have priviledges to access this API"
               		},
               		"404": {
-                			"description": "Products Not Found"
+                			"description": "Topic Not Found"
               		},
               		"500": {
                 			"description": "Internal Server error"
               		},
               		"200": {
-                			"description": "Success get products"
+                			"description": "Success get topic"
               		}
             		}
-          	}
-        	},
-        "/brands": {
-          	"get": {
+          	},
+          	"put": {
             		"tags": [
-              		"Brands"
+            	  		"Topic"
             		],
-            		"summary": "To get all products while inserting product article",
-            		"description": "Please insert some required or optional parameters for get some articles",
-            		"operationId": "brands.index",
+            		"summary": "Update topic",
+            		"description": "Update topic with all required body",
+            		"operationId": "topics.update",
             		"produces": [
               		"application/json"
             		],
@@ -1051,30 +655,35 @@
               		{
                 			"name": "token",
                 			"in": "header",
-                			"description": "authority token",
                 			"required": true,
+                			"description": "authority token",
                 			"type": "string"
-					},
-					{
-							"name": "parent",
-							"in": "query",
-							"required": false,
-							"description": "Get brands with parent of category name on parameter",
-							"type": "string"
-					},
-					{
-							"name": "category",
-							"in": "query",
-							"required": false,
-							"description": "Get brands with category id on parameter",
-							"type": "integer"
-					},
+              		},
               		{
-                			"name": "name",
-                			"in": "query",
-                			"required": false,
-                			"description": "Get brands with name parameter",
-                			"type": "string"
+                			"name": "id",
+                			"in": "path",
+                			"required": true,
+                			"description": "add id to specific update topic",
+                			"type": "integer"
+              		},
+              		{
+                			"name": "body",
+                			"in": "body",
+                			"description": "object that need for update topic",
+                			"required": true,
+                			"schema": {
+                  			"type": "object",
+                  			"required":[
+                    				"title"
+                  			],
+                  			"properties": {
+                    				"title": {
+                      				"type": "string",
+                      				"format": "text",
+                      				"example": "Pilpres"
+                    				}
+                  			}
+                			}
               		}
             		],
             		"responses": {
@@ -1088,108 +697,63 @@
                 			"description": "Forbidden Access, You not have priviledges to access this API"
               		},
               		"404": {
-                			"description": "Brand Not Found"
+                			"description": "Topic Not Found"
               		},
               		"500": {
                 			"description": "Internal Server error"
               		},
               		"200": {
-                			"description": "Success get brands"
+                			"description": "Success to update topic"
+              		}
+            		}
+          	},
+          	"delete": {
+            		"tags": [
+              		"Topic"
+            		],
+            		"summary": "Deleting topic",
+            		"description": "Deleting topic, with id supply",
+            		"operationId": "topics.destroy",
+            		"produces": [
+              		"application/json"
+            		],
+            		"parameters": [
+              		{
+                			"name": "token",
+                			"in": "header",
+                			"required": true,
+                			"description": "authority token",
+                			"type": "string"
+              		},
+              		{
+                			"name": "id",
+                			"in": "path",
+                			"required": true,
+                			"description": "add id to specific topic delete",
+                			"type": "integer"
+              		}
+            		],
+            		"responses": {
+              		"400": {
+                			"description": "Bad Request, required form data"
+              		},
+              		"401": {
+                			"description": "Not Authorized, api key not valid"
+              		},
+              		"403": {
+                			"description": "Forbidden Access, You not have priviledges to access this API"
+              		},
+              		"404": {
+                			"description": "Topic Not Found"
+              		},
+              		"500": {
+                			"description": "Internal Server error"
+              		},
+              		"204": {
+                			"description": "Success to delete topic"
               		}
             		}
           	}
-        },
-		"/countries": {
-        		"get": {
-          		"tags": [
-            			"Countries"
-          		],
-          		"summary": "To get all countries entry",
-          		"description": "this action to get countries entry while user editing profile",
-          		"operationId": "countries.index",
-          		"produces": [
-            			"apllication/json"
-          		],
-          		"parameters": [
-            			{
-              			"name": "token",
-              			"in": "header",
-              			"description": "authority token",
-              			"required": true,
-              			"type": "string"
-            			}
-          		],
-          		"responses": {
-            			"400": {
-              			"description": "Bad Request, required from data"
-            			},
-            			"401": {
-              			"description": "Not Authorized, api key not valid"
-            			},
-            			"403": {
-              			"description": "Forbidden Access, You not have priviledges to access this API"
-            			},
-            			"404": {
-              			"description": "Data Not Found"
-            			},
-            			"500": {
-              			"description": "Internal server error"
-            			},
-            			"200": {
-              			"description": "Success to get data countries"
-            			}
-          		}
-        		}
-      	},
-      	"/cities/{id}": {
-        		"get": {
-          		"tags": [
-            			"Cities"
-          		],
-          		"summary": "To get all countries entry",
-          		"description": "this action to get countries entry while user editing profile",
-          		"operationId": "cities.index",
-          		"produces": [
-            			"apllication/json"
-          		],
-          		"parameters": [
-            			{
-              			"name": "token",
-              			"in": "header",
-              			"description": "authority token",
-              			"required": true,
-              			"type": "string"
-            			},
-            			{
-              			"in": "path",
-              			"name": "id",
-              			"required": true,
-              			"type": "integer",
-              			"minimum": 1,
-              			"description": "selecting cities by country_id parameter"
-            			}
-          		],
-          		"responses": {
-            			"400": {
-              			"description": "Bad Request, required from data"
-            			},
-            			"401": {
-              			"description": "Not Authorized, api key not valid"
-            			},
-            			"403": {
-              			"description": "Forbidden Access, You not have priviledges to access this API"
-            			},
-		    			"404": {
-              			"description": "Cities with country_id is not found"
-            			},
-            			"500": {
-              			"description": "Internal server error"
-            			},
-            			"200": {
-              			"description": "Success to get data city"
-            			}
-          		}
-        		}
-      	}
+        }
 	}
 }
