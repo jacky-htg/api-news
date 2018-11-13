@@ -2,6 +2,36 @@
 
 The News API using GO Language, MySql and redis
 
+Fitur :
+* RBAC (Role Based Access Control)
+* Catching news list using redis
+* Auto resize image and auto create thumbnail image
+* Storage image to AWS S3
+* Security
+* Api documentation using swagger
+* Unit Testing and Rest api testing
+
+There is 2 (two) role, Editor and Writer. Editor can access all api. Writer only can create new news and edit own news. Guest can read topics and read news.
+
+Guest :
+* GET /news
+* GET /news/{id}
+* GET /topics
+* GET /topics/{id}
+
+Writer :
+* POST /news
+* PUT /news/{id} (but only the news he wrote himself)
+
+Editor :
+* POST /news
+* PUT /news/{id}
+* PUT /news/{id}/publish
+* DELETE /news/{id}
+* POST /topics
+* PUT /topics/{id}
+* DELETE /topics/{id}
+
 ### What is this repository for? ###
 
 * API for News

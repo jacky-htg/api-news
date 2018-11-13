@@ -1,16 +1,16 @@
 {
     "swagger": "2.0",
     "info": {
-        "title": "Shonet API",
+        "title": "API News",
         "contact": {
-            "name": "The Shonet",
+            "name": "Rijal Asepnugroho",
             "url": "https://www.rijalasepnugroho.com"
         },
         "version": "1.0"
     },
     "host": "localhost:8080",
     "schemes": [
-        "http"
+        "https"
     ],
     "paths": {
         "/get-token": {
