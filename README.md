@@ -34,6 +34,12 @@ Editor :
 
 for demo documentation, see https://api-news.rijalasepnugroho.com/documentation/
 
+Api Key : n3WsAp1D3v
+
+Editor : email (editor@gmail.com) password (1234)
+
+Writer : email (writer@gmail.com) password (1234)
+
 ### What is this repository for? ###
 
 * API for News
