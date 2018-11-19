@@ -319,3 +319,4 @@ created by net/http.(*Server).Serve
 2018/11/11 23:24:44 http: multiple response.WriteHeader calls
 2018/11/12 00:17:23 Error 1146: Table 'api_news.articles' doesn't exist
 2018/11/12 00:18:00 Error 1146: Table 'api_news.articles' doesn't exist
+2018/11/14 08:46:13 invalid connection

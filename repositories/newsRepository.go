@@ -78,9 +78,6 @@ func NewsList(param map[string]string) ([]models.News, error) {
 }
 
 func NewsGet(paramID uint) (models.News, error) {
-	var o models.News
-	var oNull models.NewsNull
-
 	rows, err := db.Query(
 		"SELECT `id`, `title`, `slug`, `content`, `image`, `image_caption`, `status`, `publish_date`, `writer`, `editor`, `created_at`, `updated_at` FROM `news` WHERE `id`=?",
 		paramID,
@@ -92,66 +89,31 @@ func NewsGet(paramID uint) (models.News, error) {
 
 	defer rows.Close()
 
-	for rows.Next() {
-		err := rows.Scan(
-			&o.ID,
-			&o.Title,
-			&o.Slug,
-			&o.Content,
-			&o.Image,
-			&o.ImageCaption,
-			&o.Status,
-			&oNull.PublishDate,
-			&o.Writer.ID,
-			&oNull.Editor,
-			&o.CreatedAt,
-			&o.UpdatedAt,
-		)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
+	return getNewsByRow(rows)
+}
 
-		o.PublishDate = oNull.PublishDate.Time
-		o.Editor.ID = uint(oNull.Editor.Int64)
-	}
-
-	err = rows.Err()
+func NewsFindFirst() (models.News, error) {
+	rows, err := db.Query("SELECT `id`, `title`, `slug`, `content`, `image`, `image_caption`, `status`, `publish_date`, `writer`, `editor`, `created_at`, `updated_at` FROM `news` WHERE `status` != 'X' ORDER BY id ASC LIMIT 1")
 	libraries.CheckError(err)
 	if err != nil {
 		return models.News{}, err
 	}
 
-	if o.Writer.ID > 0 {
-		o.Writer, err = UserGet(o.Writer.ID)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
+	defer rows.Close()
 
-		o.Writer.Password = nil
-	} else {
-		o.Writer = models.User{}
-	}
+	return getNewsByRow(rows)
+}
 
-	if o.Editor.ID > 0 {
-		o.Editor, err = UserGet(o.Editor.ID)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		o.Editor.Password = nil
-	} else {
-		o.Editor = models.User{}
-	}
-
-	o.Topic, err = TopicGetByNewsId(o.ID)
+func NewsFindLast() (models.News, error) {
+	rows, err := db.Query("SELECT `id`, `title`, `slug`, `content`, `image`, `image_caption`, `status`, `publish_date`, `writer`, `editor`, `created_at`, `updated_at` FROM `news` WHERE `status` != 'X' ORDER BY id DESC LIMIT 1")
+	libraries.CheckError(err)
 	if err != nil {
 		return models.News{}, err
 	}
 
-	return o, nil
+	defer rows.Close()
+
+	return getNewsByRow(rows)
 }
 
 func getNewsRow(rows *sql.Rows, err error) ([]models.News, error) {
@@ -230,6 +192,72 @@ func getNewsRow(rows *sql.Rows, err error) ([]models.News, error) {
 	}
 
 	return news, nil
+}
+
+func getNewsByRow(rows *sql.Rows) (models.News, error) {
+	var o models.News
+	var oNull models.NewsNull
+
+	for rows.Next() {
+		err := rows.Scan(
+			&o.ID,
+			&o.Title,
+			&o.Slug,
+			&o.Content,
+			&o.Image,
+			&o.ImageCaption,
+			&o.Status,
+			&oNull.PublishDate,
+			&o.Writer.ID,
+			&oNull.Editor,
+			&o.CreatedAt,
+			&o.UpdatedAt,
+		)
+		libraries.CheckError(err)
+		if err != nil {
+			return models.News{}, err
+		}
+
+		o.PublishDate = oNull.PublishDate.Time
+		o.Editor.ID = uint(oNull.Editor.Int64)
+	}
+
+	err = rows.Err()
+	libraries.CheckError(err)
+	if err != nil {
+		return models.News{}, err
+	}
+
+	if o.Writer.ID > 0 {
+		o.Writer, err = UserGet(o.Writer.ID)
+		libraries.CheckError(err)
+		if err != nil {
+			return models.News{}, err
+		}
+
+		o.Writer.Password = nil
+	} else {
+		o.Writer = models.User{}
+	}
+
+	if o.Editor.ID > 0 {
+		o.Editor, err = UserGet(o.Editor.ID)
+		libraries.CheckError(err)
+		if err != nil {
+			return models.News{}, err
+		}
+
+		o.Editor.Password = nil
+	} else {
+		o.Editor = models.User{}
+	}
+
+	o.Topic, err = TopicGetByNewsId(o.ID)
+	if err != nil {
+		return models.News{}, err
+	}
+
+	return o, nil
 }
 
 func NewsIsExists(title string, id uint) (bool, error) {

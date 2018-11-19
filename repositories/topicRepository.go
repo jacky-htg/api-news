@@ -48,7 +48,6 @@ func TopicGetList(param map[string]string) ([]models.Topic, error) {
 }
 
 func TopicGet(paramsID uint) (models.Topic, error) {
-	var o models.Topic
 	rows, err := db.Query(
 		"SELECT `id`, `title`, `created_at`, `updated_at` FROM `topics` WHERE `id`=?",
 		paramsID,
@@ -60,26 +59,31 @@ func TopicGet(paramsID uint) (models.Topic, error) {
 
 	defer rows.Close()
 
-	for rows.Next() {
-		err := rows.Scan(
-			&o.ID,
-			&o.Title,
-			&o.CreatedAt,
-			&o.UpdatedAt,
-		)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.Topic{}, err
-		}
-	}
+	return getTopicByRow(rows)
+}
 
-	err = rows.Err()
+func TopicFindFirst() (models.Topic, error) {
+	rows, err := db.Query("SELECT `id`, `title`, `created_at`, `updated_at` FROM `topics` ORDER BY id ASC LIMIT 1")
 	libraries.CheckError(err)
 	if err != nil {
 		return models.Topic{}, err
 	}
 
-	return o, nil
+	defer rows.Close()
+
+	return getTopicByRow(rows)
+}
+
+func TopicFindLast() (models.Topic, error) {
+	rows, err := db.Query("SELECT `id`, `title`, `created_at`, `updated_at` FROM `topics` ORDER BY id DESC LIMIT 1")
+	libraries.CheckError(err)
+	if err != nil {
+		return models.Topic{}, err
+	}
+
+	defer rows.Close()
+
+	return getTopicByRow(rows)
 }
 
 func TopicIsExist(title string, id uint) (bool, error) {
@@ -162,6 +166,80 @@ func TopicUpdate(o models.Topic) (models.Topic, error) {
 	}
 
 	return o, nil
+}
+
+func TopicDestroy(id uint) (bool, error) {
+	stmt, err := db.Prepare(
+		"DELETE FROM topics WHERE `id`=?",
+	)
+	libraries.CheckError(err)
+	if err != nil {
+		return false, err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	libraries.CheckError(err)
+	if err != nil {
+		return false, err
+	}
+
+	stmt, err = db.Prepare(
+		"DELETE FROM news_topics WHERE `topic_id`=?",
+	)
+	libraries.CheckError(err)
+	if err != nil {
+		return false, err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(id)
+	libraries.CheckError(err)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func TopicGetByNewsId(news_id uint) ([]models.Topic, error) {
+	var topics []models.Topic
+
+	rows, err := db.Query("SELECT `topic_id` FROM `news_topics` WHERE `news_id`=?", news_id)
+
+	libraries.CheckError(err)
+	if err != nil {
+		return []models.Topic{}, err
+	}
+
+	defer rows.Close()
+
+	for rows.Next() {
+		var topic models.Topic
+
+		err := rows.Scan(&topic.ID)
+		libraries.CheckError(err)
+		if err != nil {
+			return []models.Topic{}, err
+		}
+
+		topic, err = TopicGet(topic.ID)
+		libraries.CheckError(err)
+		if err != nil {
+			return []models.Topic{}, err
+		}
+
+		topics = append(topics, topic)
+	}
+
+	err = rows.Err()
+	if err != nil {
+		return []models.Topic{}, err
+	}
+
+	return topics, nil
 }
 
 func topicGetRow(rows *sql.Rows, err error) ([]models.Topic, error) {
@@ -261,76 +339,27 @@ func topicIsExist(title string) (models.Topic, error) {
 	return o, nil
 }
 
-func TopicDestroy(id uint) (bool, error) {
-	stmt, err := db.Prepare(
-		"DELETE FROM topics WHERE `id`=?",
-	)
-	libraries.CheckError(err)
-	if err != nil {
-		return false, err
-	}
-
-	defer stmt.Close()
-
-	_, err = stmt.Exec(id)
-	libraries.CheckError(err)
-	if err != nil {
-		return false, err
-	}
-
-	stmt, err = db.Prepare(
-		"DELETE FROM news_topics WHERE `topic_id`=?",
-	)
-	libraries.CheckError(err)
-	if err != nil {
-		return false, err
-	}
-
-	defer stmt.Close()
-
-	_, err = stmt.Exec(id)
-	libraries.CheckError(err)
-	if err != nil {
-		return false, err
-	}
-
-	return true, nil
-}
-
-func TopicGetByNewsId(news_id uint) ([]models.Topic, error) {
-	var topics []models.Topic
-
-	rows, err := db.Query("SELECT `topic_id` FROM `news_topics` WHERE `news_id`=?", news_id)
-
-	libraries.CheckError(err)
-	if err != nil {
-		return []models.Topic{}, err
-	}
-
-	defer rows.Close()
+func getTopicByRow(rows *sql.Rows) (models.Topic, error) {
+	var o models.Topic
 
 	for rows.Next() {
-		var topic models.Topic
-
-		err := rows.Scan(&topic.ID)
+		err := rows.Scan(
+			&o.ID,
+			&o.Title,
+			&o.CreatedAt,
+			&o.UpdatedAt,
+		)
 		libraries.CheckError(err)
 		if err != nil {
-			return []models.Topic{}, err
+			return models.Topic{}, err
 		}
-
-		topic, err = TopicGet(topic.ID)
-		libraries.CheckError(err)
-		if err != nil {
-			return []models.Topic{}, err
-		}
-
-		topics = append(topics, topic)
 	}
 
 	err = rows.Err()
+	libraries.CheckError(err)
 	if err != nil {
-		return []models.Topic{}, err
+		return models.Topic{}, err
 	}
 
-	return topics, nil
+	return o, nil
 }
