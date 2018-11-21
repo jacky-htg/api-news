@@ -119,8 +119,9 @@ to install go, https://golang.org/doc/install
 * go get github.com/aws/aws-sdk-go
 * go get github.com/gosimple/slug
 * go get gopkg.in/redis.v5
-* go get golang.org/x/net/html
+* go get github.com/gorilla/websocket
 * go get github.com/nfnt/resize
+* go get github.com/adjust/rmq
 
 File Configuration on ./config/config.json
 
