@@ -7,6 +7,7 @@ import (
 	"database/sql"
 	"encoding/base64"
 	"encoding/hex"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"image"
@@ -25,7 +26,10 @@ import (
 )
 
 func NewsList(param map[string]string) ([]models.News, error) {
+	var news []models.News
 	var query string
+	var paramStr = ""
+
 	query = "SELECT " +
 		"`news`.`id`, `news`.`title`, `slug`, `content`, `image`, `image_caption`, `status`, `publish_date`, `writer`, `editor`, `news`.`created_at`, `news`.`updated_at`" +
 		" FROM `news` JOIN `news_topics` ON (`news`.`id`=`news_topics`.`news_id`) JOIN `topics` ON (`news_topics`.`topic_id`=`topics`.`id`)"
@@ -34,30 +38,37 @@ func NewsList(param map[string]string) ([]models.News, error) {
 
 	if len(param["status"]) > 0 && param["status"] != "" {
 		query += " `status`='" + param["status"] + "'"
+		paramStr += "status=" + param["status"]
 	} else {
 		query += " `status`!='X'"
+		paramStr += "status!=X"
 	}
 
 	if len(param["search"]) > 0 && param["search"] != "" {
 		query += " AND (`news`.`title` LIKE '%" + param["search"] + "%' OR `content` LIKE '%" + param["search"] + "%' OR `topics`.`title` LIKE '%" + param["search"] + "%')"
+		paramStr += "search=" + param["search"]
 	}
 
 	if len(param["topic"]) > 0 && param["topic"] != "" {
 		query += " AND `news_topics`.`topic_id`='" + param["topic"] + "'"
+		paramStr += "topic=" + param["topic"]
 	}
 
 	query += " GROUP BY `news`.`id` "
 
 	if len(param["sortby"]) > 0 && param["sortby"] != "" {
 		query += " ORDER BY " + param["sortby"]
+		paramStr += "sortBy=" + param["sortBy"]
 		if len(param["order"]) > 0 && param["order"] != "" {
 			query += " " + param["order"]
+			paramStr += "order=" + param["order"]
 		} else {
 			query += " DESC"
 		}
 	} else {
 		if len(param["order"]) > 0 && param["order"] != "" {
 			query += " ORDER BY `news`.`id` " + param["order"]
+			paramStr += "order=" + param["order"]
 		} else {
 			query += " ORDER BY `news`.`id` DESC"
 		}
@@ -69,11 +80,24 @@ func NewsList(param map[string]string) ([]models.News, error) {
 	offset = page*limit - limit
 
 	query += " LIMIT " + param["limit"] + " OFFSET " + strconv.Itoa(offset)
-	return getNewsRow(
-		db.Query(
-			query,
-		),
-	)
+
+	if exists := libraries.RedisExists("newslist:" + paramStr); exists {
+		data, err := libraries.RedisGet("newslist:" + paramStr)
+		libraries.CheckError(err)
+		if err != nil {
+			return []models.News{}, err
+		}
+
+		if err := json.Unmarshal(data, &news); err != nil {
+			libraries.CheckError(err)
+			return []models.News{}, err
+		}
+
+		return news, nil
+	}
+
+	rows, err := db.Query(query)
+	return getNewsRow(rows, err, paramStr)
 }
 
 func NewsGet(paramID uint) (models.News, error) {
@@ -115,7 +139,7 @@ func NewsFindLast() (models.News, error) {
 	return getNewsByRow(rows)
 }
 
-func getNewsRow(rows *sql.Rows, err error) ([]models.News, error) {
+func getNewsRow(rows *sql.Rows, err error, paramStr string) ([]models.News, error) {
 	var news []models.News
 	libraries.CheckError(err)
 
@@ -187,6 +211,17 @@ func getNewsRow(rows *sql.Rows, err error) ([]models.News, error) {
 
 	err = rows.Err()
 	if err != nil {
+		return []models.News{}, err
+	}
+
+	jsonData, err := json.Marshal(&news)
+	libraries.CheckError(err)
+	if err != nil {
+		return []models.News{}, err
+	}
+
+	if err = libraries.RedisSet("newslist:"+paramStr, string(jsonData), 0); err != nil {
+		libraries.CheckError(err)
 		return []models.News{}, err
 	}
 
@@ -341,6 +376,9 @@ func NewsStore(o models.News) (models.News, error) {
 		return o, err
 	}
 
+	err = libraries.RedisDeletePrefix("newslist:")
+	libraries.CheckError(err)
+
 	return o, nil
 }
 
@@ -481,6 +519,9 @@ func NewsUpdate(oNew models.News) (models.News, error) {
 		return models.News{}, nil
 	}
 
+	err = libraries.RedisDeletePrefix("newslist:")
+	libraries.CheckError(err)
+
 	return news, nil
 }
 
@@ -506,6 +547,9 @@ func NewsPublish(news models.News) (models.News, error) {
 		return models.News{}, nil
 	}
 
+	err = libraries.RedisDeletePrefix("newslist:")
+	libraries.CheckError(err)
+
 	return news, nil
 }
 
@@ -529,6 +573,9 @@ func NewsDestroy(news models.News) (models.News, error) {
 	if err != nil {
 		return models.News{}, nil
 	}
+
+	err = libraries.RedisDeletePrefix("newslist:")
+	libraries.CheckError(err)
 
 	return news, nil
 }

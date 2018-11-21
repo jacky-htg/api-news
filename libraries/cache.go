@@ -1,6 +1,5 @@
 package libraries
 
-/*
 import (
 	"time"
 
@@ -79,4 +78,27 @@ func RedisHashExists(key string, field string) bool {
 
 	return false
 }
-*/
+
+func RedisFlushAll() error {
+	return client.FlushAll().Err()
+}
+
+func RedisDeletePrefix(prefix string) error {
+	var err error
+
+	key := PREFIX_REDIS + prefix + "*"
+
+	keys, err := client.Keys(key).Result()
+	if err != nil {
+		return err
+	}
+
+	for _, key := range keys {
+		err = client.Del(key).Err()
+		if err != nil {
+			return err
+		}
+	}
+
+	return err
+}
