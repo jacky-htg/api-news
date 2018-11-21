@@ -12,3 +12,4 @@
 *.out
 
 config/config.json
+error.log

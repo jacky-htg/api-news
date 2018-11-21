@@ -17,7 +17,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/jacky-htg/api-news/config"
 	"github.com/jacky-htg/api-news/libraries"
@@ -299,74 +298,38 @@ func NewsStore(o models.News) (models.News, error) {
 		}
 	}
 
-	if o.PublishDate.Format(time.RFC822) != "01 Jan 01 00:00 UTC" {
-		stmt, err := db.Prepare(
-			"INSERT INTO news (`title`, `slug`, `content`, `image`, `image_caption`, `publish_date`, `writer`)" +
-				" VALUES (?, ?, ?, ?, ?, ?, ?)",
-		)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		defer stmt.Close()
-
-		res, err := stmt.Exec(
-			o.Title,
-			o.Slug,
-			o.Content,
-			o.Image,
-			o.ImageCaption,
-			o.PublishDate,
-			o.Writer.ID,
-		)
-
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		id, err := res.LastInsertId()
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		o.ID = uint(id)
-	} else {
-		stmt, err := db.Prepare(
-			"INSERT INTO news (`title`, `slug`, `content`, `image`, `image_caption`, `writer`)" +
-				" VALUES (?, ?, ?, ?, ?, ?)",
-		)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		defer stmt.Close()
-
-		res, err := stmt.Exec(
-			o.Title,
-			o.Slug,
-			o.Content,
-			o.Image,
-			o.ImageCaption,
-			o.Writer.ID,
-		)
-
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		id, err := res.LastInsertId()
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, err
-		}
-
-		o.ID = uint(id)
+	stmt, err := db.Prepare(
+		"INSERT INTO news (`title`, `slug`, `content`, `image`, `image_caption`, `writer`)" +
+			" VALUES (?, ?, ?, ?, ?, ?)",
+	)
+	libraries.CheckError(err)
+	if err != nil {
+		return models.News{}, err
 	}
+
+	defer stmt.Close()
+
+	res, err := stmt.Exec(
+		o.Title,
+		o.Slug,
+		o.Content,
+		o.Image,
+		o.ImageCaption,
+		o.Writer.ID,
+	)
+
+	libraries.CheckError(err)
+	if err != nil {
+		return models.News{}, err
+	}
+
+	id, err := res.LastInsertId()
+	libraries.CheckError(err)
+	if err != nil {
+		return models.News{}, err
+	}
+
+	o.ID = uint(id)
 
 	err = storeNewsTopic(o)
 	if err != nil {
@@ -476,10 +439,6 @@ func NewsUpdate(oNew models.News) (models.News, error) {
 		news.Content = oNew.Content
 	}
 
-	if oNew.PublishDate.Format(time.RFC822) != "01 Jan 01 00:00 UTC" {
-		news.PublishDate = oNew.PublishDate
-	}
-
 	if len(oNew.ImageCaption) > 0 && oNew.ImageCaption != "" {
 		news.ImageCaption = oNew.ImageCaption
 	}
@@ -498,7 +457,7 @@ func NewsUpdate(oNew models.News) (models.News, error) {
 
 	stmt, err := db.Prepare(
 		"UPDATE news" +
-			" SET `title`=?, `slug`=?, `content`=?, `image`=?, `image_caption`=?, `publish_date`=?, `editor`=?, `updated_at`=NOW()" +
+			" SET `title`=?, `slug`=?, `content`=?, `image`=?, `image_caption`=?, `editor`=?, `updated_at`=NOW()" +
 			" WHERE id=?",
 	)
 	libraries.CheckError(err)
@@ -508,36 +467,18 @@ func NewsUpdate(oNew models.News) (models.News, error) {
 
 	defer stmt.Close()
 
-	if news.PublishDate.Format(time.RFC822) != "01 Jan 01 00:00 UTC" {
-		_, err := stmt.Exec(
-			news.Title,
-			news.Slug,
-			news.Content,
-			news.Image,
-			news.ImageCaption,
-			news.PublishDate,
-			news.Editor.ID,
-			news.ID,
-		)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, nil
-		}
-	} else {
-		_, err := stmt.Exec(
-			news.Title,
-			news.Slug,
-			news.Content,
-			news.Image,
-			news.ImageCaption,
-			nil,
-			news.Editor.ID,
-			news.ID,
-		)
-		libraries.CheckError(err)
-		if err != nil {
-			return models.News{}, nil
-		}
+	_, err = stmt.Exec(
+		news.Title,
+		news.Slug,
+		news.Content,
+		news.Image,
+		news.ImageCaption,
+		news.Editor.ID,
+		news.ID,
+	)
+	libraries.CheckError(err)
+	if err != nil {
+		return models.News{}, nil
 	}
 
 	return news, nil
@@ -546,7 +487,7 @@ func NewsUpdate(oNew models.News) (models.News, error) {
 func NewsPublish(news models.News) (models.News, error) {
 	stmt, err := db.Prepare(
 		"UPDATE news" +
-			" SET `status`='P', `editor`=?, `updated_at`=NOW()" +
+			" SET `status`='P', `editor`=?, `publish_date`=NOW(), `updated_at`=NOW()" +
 			" WHERE id=?",
 	)
 	libraries.CheckError(err)

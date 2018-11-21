@@ -320,3 +320,28 @@ created by net/http.(*Server).Serve
 2018/11/12 00:17:23 Error 1146: Table 'api_news.articles' doesn't exist
 2018/11/12 00:18:00 Error 1146: Table 'api_news.articles' doesn't exist
 2018/11/14 08:46:13 invalid connection
+2018/11/21 09:08:56 unexpected EOF
+2018/11/21 09:14:33 unexpected EOF
+2018/11/21 09:16:47 unexpected EOF
+2018/11/21 09:19:33 unexpected EOF
+2018/11/21 09:19:42 unexpected EOF
+2018/11/21 09:20:43 unexpected EOF
+2018/11/21 09:21:22 unexpected EOF
+2018/11/21 09:24:21 unexpected EOF
+2018/11/21 09:25:20 unexpected EOF
+2018/11/21 09:26:06 unexpected EOF
+2018/11/21 09:26:23 unexpected EOF
+2018/11/21 09:27:34 unexpected EOF
+2018/11/21 09:27:38 unexpected EOF
+2018/11/21 09:29:37 unexpected EOF
+2018/11/21 09:29:44 unexpected EOF
+2018/11/21 09:29:45 unexpected EOF
+2018/11/21 09:39:13 Error 1406: Data too long for column 'image' at row 1
+2018/11/21 09:41:08 Error 1406: Data too long for column 'image' at row 1
+2018/11/21 09:43:49 invalid JPEG format: missing SOI marker
+2018/11/21 09:50:05 remove ./: invalid argument
+2018/11/21 09:54:37 remove ./: invalid argument
+2018/11/21 09:55:57 remove ./: invalid argument
+2018/11/21 09:57:49 remove ./: invalid argument
+2018/11/21 10:08:18 remove ./: invalid argument
+2018/11/21 10:09:17 remove ./: invalid argument

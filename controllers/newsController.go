@@ -5,7 +5,6 @@ import (
 	"errors"
 	"net/http"
 	"strconv"
-	"time"
 
 	"github.com/gorilla/mux"
 	"github.com/gosimple/slug"
@@ -146,7 +145,7 @@ func NewsCreateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	libraries.SetData(w, news, http.StatusOK)
+	libraries.SetData(w, news, http.StatusCreated)
 }
 
 func NewsUpdateHandler(w http.ResponseWriter, r *http.Request) {
@@ -253,11 +252,6 @@ func NewsPublishHandler(w http.ResponseWriter, r *http.Request) {
 
 	if newsExisting.Status == "P" {
 		libraries.ErrorResponse(w, "News has published", http.StatusForbidden)
-		return
-	}
-
-	if newsExisting.PublishDate.Format(time.RFC822) == "01 Jan 01 00:00 UTC" {
-		libraries.ErrorResponse(w, "Publish date can not null", http.StatusForbidden)
 		return
 	}
 
