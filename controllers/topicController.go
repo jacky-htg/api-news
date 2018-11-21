@@ -113,6 +113,7 @@ func TopicCreateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	oR = models.TopicValidate(oR)
 	topic, err := repositories.TopicStore(oR)
 	if !checkError(w, err) {
 		return
@@ -170,6 +171,7 @@ func TopicUpdateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	oR = models.TopicValidate(oR)
 	topic, err := repositories.TopicUpdate(oR)
 	if !checkError(w, err) {
 		return

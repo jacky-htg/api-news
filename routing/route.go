@@ -30,8 +30,16 @@ var routes = Routes{
 	Route{"/topics/{id}", "DELETE", controllers.TopicDeleteHandler},
 }
 
+var socketRoutes = Routes{
+	Route{"/newssocket", "", controllers.NewsListSocketHandler},
+}
+
 func NewRouter() *mux.Router {
 	router := mux.NewRouter()
+
+	for _, route := range socketRoutes {
+		router.HandleFunc(route.Path, route.Handler)
+	}
 
 	for _, route := range routes {
 		router.HandleFunc(route.Path, route.Handler).Methods(route.Method)

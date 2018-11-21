@@ -11,6 +11,7 @@ import (
 	"github.com/jacky-htg/api-news/libraries"
 	"github.com/jacky-htg/api-news/models"
 	"github.com/jacky-htg/api-news/repositories"
+	"github.com/jacky-htg/api-news/services"
 )
 
 func NewsGetHandler(w http.ResponseWriter, r *http.Request) {
@@ -134,6 +135,7 @@ func NewsCreateHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	oR = models.NewsValidate(oR)
 	oR.Slug = slug.Make(oR.Title)
 
 	if len(oR.Content) <= 0 {
@@ -210,10 +212,11 @@ func NewsUpdateHandler(w http.ResponseWriter, r *http.Request) {
 			libraries.ErrorResponse(w, "News already exist! Please change the title.", http.StatusInternalServerError)
 			return
 		}
-
+		oR = models.NewsValidate(oR)
 		oR.Slug = slug.Make(oR.Title)
 	}
 
+	oR = models.NewsValidate(oR)
 	news, err := repositories.NewsUpdate(oR)
 	if !checkError(w, err) {
 		return
@@ -267,6 +270,13 @@ func NewsPublishHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	queue := libraries.OpenQueue("news")
+	out, err := json.Marshal(news)
+	if err != nil {
+		panic(err)
+	}
+	queue.Publish(string(out))
+
 	libraries.SetData(w, news, http.StatusOK)
 }
 
@@ -299,4 +309,8 @@ func NewsDeleteHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	libraries.SetData(w, nil, http.StatusNoContent)
+}
+
+func NewsListSocketHandler(w http.ResponseWriter, r *http.Request) {
+	services.NewsListHandler(w, r)
 }

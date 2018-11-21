@@ -10,6 +10,16 @@ Fitur :
 * Security
 * Api documentation using swagger
 * Unit Testing and Rest api testing
+* Queue Messaging using redis, every new publish news will be push to queue messaging
+* Websocket to broadcast new publish news
+
+### What is this repository for? ###
+
+* API for News
+* 1.0
+* [Learn Markdown]
+
+### RBAC ###
 
 There is 2 (two) role, Editor and Writer. Editor can access all api. Writer only can create new news and edit own news. Guest can read topics and read news.
 
@@ -32,6 +42,58 @@ Editor :
 * PUT /topics/{id}
 * DELETE /topics/{id}
 
+### What is this repository for? ###
+
+Websocket is used to broadcast new publish news. WebSocket address is : ws://localhost:8080/newssocket. Here is sample script on client when consum a websocket.
+
+```
+<script>
+var ws = new WebSocket("ws://localhost:8080/newssocket");
+
+ws.onopen = function() {
+  ws.send("hello server!")
+}
+
+ws.onmessage = function(event) {
+  var m = event.data;
+  if (m === "pong") console.debug("Received message", m);
+  else notifyMe(m);
+}
+
+ws.onerror = function(event) {
+  console.debug(event)
+}
+
+function notifyMe(message) {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+    alert("This browser does not support system notifications");
+  }
+
+  // Let's check whether notification permissions have already been granted
+  else if (Notification.permission === "granted") {
+    // If it's okay let's create a notification
+    var notification = new Notification(message);
+  }
+
+  // Otherwise, we need to ask the user for permission
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification(message);
+      }
+    });
+  }
+
+  // Finally, if the user has denied notifications and you 
+  // want to be respectful there is no need to bother them any more.
+}
+</script>
+```
+
+### Demo ###
+
 for demo documentation, see https://api-news.rijalasepnugroho.com/documentation/
 
 Api Key : n3WsAp1D3v
@@ -40,11 +102,6 @@ Editor : email (editor@gmail.com) password (1234)
 
 Writer : email (writer@gmail.com) password (1234)
 
-### What is this repository for? ###
-
-* API for News
-* 1.0
-* [Learn Markdown]
 
 ### How do I get set up? ###
 

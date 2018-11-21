@@ -2,6 +2,7 @@ package models
 
 import (
 	"database/sql"
+	"text/template"
 	"time"
 
 	"github.com/go-sql-driver/mysql"
@@ -29,4 +30,11 @@ type NewsNull struct {
 	ImageCaption sql.NullString
 	PublishDate  mysql.NullTime
 	Editor       sql.NullInt64
+}
+
+func NewsValidate(o News) News {
+	o.Title = template.HTMLEscapeString(o.Title)
+	o.Content = template.JSEscapeString(o.Content)
+
+	return o
 }
