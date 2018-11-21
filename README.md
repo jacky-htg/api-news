@@ -44,7 +44,7 @@ Editor :
 
 ### Web Socket ###
 
-Websocket is used to broadcast new publish news. WebSocket address is : ws://localhost:8080/newssocket. Here is sample script on client when consum a websocket.
+Websocket is used to broadcast new publish news. WebSocket address is : ws://localhost:8080/newssocket. Here is sample script on client when consum a websocket. Create a file client.html on your document root and open it using your favorite browser : http://localhost/client.html
 
 ```
 <script>
