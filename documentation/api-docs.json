@@ -337,8 +337,6 @@
                   			"required":[
                     				"title",
                     				"content",
-                    				"image",
-                    				"publish_date",
                     				"topic"
                   			],
                   			"properties": {
@@ -351,15 +349,6 @@
                       				"type": "string",
                       				"format": "text",
                       				"example": "<p>Can you input HTML code as string</p>"
-                    				},
-                    				"image": {
-                      				"type": "string",
-                      				"format": "byte",
-                      				"example": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAgESAAMAAAABAAEAAIdpAAQAAAABAAAAJgAAAAAAAqACAAQAAAABAAACVKADAAQAAAABAAACSgAAAAD/4QkhaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJYTVAgQ29yZSA1LjQuMCI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI/mab6en6v+v+GNy3d2loJiotbcKqRhQII8KNoOABHgDJJwO/NID//Z"
-                    				},
-                    				"publish_date": {
-                      				"type": "string",
-                      				"format": "date-time"
                     				},
                     				"topic": {
                       				"type": "array",
@@ -459,6 +448,55 @@
             		}
           	}
         },
+		"/news/{id}/publish": {
+          	"put": {
+            		"tags": [
+            	  		"News"
+            		],
+            		"summary": "publish news",
+            		"description": "publish news",
+            		"operationId": "news.publish",
+            		"produces": [
+              		"application/json"
+            		],
+            		"parameters": [
+              		{
+                			"name": "token",
+                			"in": "header",
+                			"required": true,
+                			"description": "authority token",
+                			"type": "string"
+              		},
+              		{
+                			"name": "id",
+                			"in": "path",
+                			"required": true,
+                			"description": "add id to specific publish news",
+                			"type": "integer"
+              		}
+            		],
+            		"responses": {
+              		"400": {
+                			"description": "Bad Request, required form data"
+              		},
+              		"401": {
+                			"description": "Not Authorized, api key not valid"
+              		},
+              		"403": {
+                			"description": "Forbidden Access, You not have priviledges to access this API"
+              		},
+              		"404": {
+                			"description": "News Not Found"
+              		},
+              		"500": {
+                			"description": "Internal Server error"
+              		},
+              		"200": {
+                			"description": "Success to publish news"
+              		}
+            		}
+          	}
+		},
         "/topics": {
           	"get": {
             		"tags": [
