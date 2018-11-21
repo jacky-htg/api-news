@@ -42,7 +42,7 @@ Editor :
 * PUT /topics/{id}
 * DELETE /topics/{id}
 
-### What is this repository for? ###
+### Web Socket ###
 
 Websocket is used to broadcast new publish news. WebSocket address is : ws://localhost:8080/newssocket. Here is sample script on client when consum a websocket.
 
