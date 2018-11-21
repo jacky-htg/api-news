@@ -6,11 +6,11 @@ import (
 	"log"
 	"net/http"
 	"time"
-	"websocket/models"
 
 	"github.com/adjust/rmq"
 	"github.com/gorilla/websocket"
 	"github.com/jacky-htg/api-news/config"
+	"github.com/jacky-htg/api-news/models"
 )
 
 const (
