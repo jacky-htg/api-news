@@ -31,7 +31,7 @@ CREATE TABLE `access` (
   `parent_id` int(10) UNSIGNED DEFAULT NULL,
   `name` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL 
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -79,7 +79,7 @@ CREATE TABLE `groups` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -108,7 +108,7 @@ CREATE TABLE `news` (
   `writer` int(10) UNSIGNED NOT NULL,
   `editor` int(10) UNSIGNED DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL 
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -148,7 +148,7 @@ CREATE TABLE `topics` (
   `id` int(10) UNSIGNED NOT NULL,
   `title` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL 
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -179,7 +179,7 @@ CREATE TABLE `users` (
   `birthdate` datetime DEFAULT NULL,
   `gender` varchar(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `updated_at` timestamp NOT NULL 
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --

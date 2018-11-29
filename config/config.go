@@ -7,7 +7,8 @@ import (
 )
 
 func init() {
-	viper.SetConfigFile("./config/config.json")
+	viper.SetConfigFile("/go/src/github.com/jacky-htg/api-news/config/config.json")
+	//viper.SetConfigFile("./config/config.json")
 	err := viper.ReadInConfig()
 	if err != nil {
 		log.Fatal("ReadInConfig: ", err)
